@@ -1,0 +1,9 @@
+apiVersion: v2
+name: java-helloworld
+description: A Helm chart for deploying Java Hello World Spring Boot application with AngularJS frontend
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Developer
+    email: developer@example.com

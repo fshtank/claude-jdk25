@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html ng-app="helloApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World - AngularJS + Spring Boot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+        .message-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body ng-controller="HelloController as ctrl">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 class="mb-0">🌍 Hello World</h1>
+                        <p class="mb-0 mt-2">AngularJS + Spring Boot</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <label class="form-label">Enter your name:</label>
+                            <div class="input-group">
+                                <input type="text" 
+                                       class="form-control" 
+                                       ng-model="ctrl.name"
+                                       placeholder="Your name"
+                                       ng-keypress="if($event.key === 'Enter') ctrl.getHello()">
+                                <button class="btn btn-primary" 
+                                        ng-click="ctrl.getHello()"
+                                        ng-disabled="ctrl.loading">
+                                    {{ctrl.loading ? 'Loading...' : 'Greet Me'}}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div ng-if="ctrl.message" class="message-box">
+                            <h4 class="text-center mb-3">{{ctrl.message}}</h4>
+                            <div class="text-center">
+                                <span class="badge bg-success">Status: {{ctrl.status}}</span>
+                            </div>
+                        </div>
+
+                        <div ng-if="ctrl.error" class="alert alert-danger">
+                            {{ctrl.error}}
+                        </div>
+
+                        <hr>
+
+                        <div class="text-center">
+                            <h5 class="mb-3">API Endpoints:</h5>
+                            <ul class="list-unstyled">
+                                <li><code>/api/hello</code> - Get personalized greeting</li>
+                                <li><code>/api/greeting</code> - Get default greeting</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        <small>Made with ❤️ using AngularJS & Spring Boot</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var app = angular.module('helloApp', []);
+
+        app.controller('HelloController', function($scope, $http) {
+            var vm = this;
+            vm.name = '';
+            vm.message = '';
+            vm.status = '';
+            vm.error = '';
+            vm.loading = false;
+
+            vm.getHello = function() {
+                vm.loading = true;
+                vm.error = '';
+                
+                $http.get('/api/hello', {
+                    params: { name: vm.name || 'World' }
+                })
+                .then(function(response) {
+                    vm.message = response.data.message;
+                    vm.status = response.data.status;
+                })
+                .catch(function(error) {
+                    vm.error = 'Error: ' + (error.message || 'Failed to connect to server');
+                    console.error('Error:', error);
+                })
+                .finally(function() {
+                    vm.loading = false;
+                });
+            };
+
+            // Load default greeting on page load
+            $http.get('/api/greeting')
+                .then(function(response) {
+                    console.log('Default greeting loaded:', response.data);
+                })
+                .catch(function(error) {
+                    console.log('Could not load default greeting:', error);
+                });
+        });
+    </script>
+</body>
+</html>

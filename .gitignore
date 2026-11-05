@@ -1,0 +1,66 @@
+# Compiled Java files
+**/*.class
+**/*.log
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+*.swp
+*.swo
+*.swo*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Docker
+Dockerfile*.bke
+docker-compose*.override.yml
+
+# Application
+*.jar
+*.war
+*.ear
+
+# Kubernetes
+*.kubeconfig
+kubectl-edit-*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Helm
+helm-chart/charts/
+helm-chart/crds/
+helm-chart/.helmignore
