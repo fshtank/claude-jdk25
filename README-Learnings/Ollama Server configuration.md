@@ -81,3 +81,36 @@ With `q8_0` KV cache, 32K context drops from ~2 GB to ~1 GB, giving you breathin
 
 
 
+
+--- 
+## Variable location
+Original Claude/LLM wanted the variable in a file:
+`~/Library/LaunchAgents/com.ollama.env.plist:`
+- The UI Would pick it up eech time
+- and create duplicates to live in `~/.zshrc`
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.ollama.env</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>source ~/ollama.env &amp;&amp; for v in $(env | grep -oP '^OLLAMA_\w+' &lt; ~/ollama.env); do launchctl setenv "$v" "$(grep "^$v=" ~/ollama.env | cut -d= -f2)"; done</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
+```    
+
+## Final Solution for Variables: 
+I called it out and said I want ONE PLACE:
+`~/ollama.env`
+
+Now one file, three consumers (GUI app, CLI, and anything else you add later), zero hardcoding in the plist.
