@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## Project Overview
 
-`java-ai-assist` (artifact) — a Spring Boot **3.2.0** REST "hello world" service.
+`Claude Code, Spring Boot, JDK25 laboratory` (artifact) — a Spring Boot **4.1.2** REST "hello world" service.
 - **Group / artifact:** `org.example:java-ai-assist`
 - **Base package:** `org.example` (entrypoint: `HelloWorldApplication`)
 - **Endpoints:** `GET /api/hello?name=…`, `GET /api/greeting`, plus actuator `/actuator/health`

@@ -1,4 +1,4 @@
-# Java Hello World Application
+# Claude-jdk25 Java Laboratory
 
 A complete Hello World application featuring an **AngularJS frontend** and a **Java Spring Boot backend**, with Docker and Kubernetes Helm chart support for containerization and deployment.
 

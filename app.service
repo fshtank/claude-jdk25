@@ -1,0 +1,19 @@
+## This is for /etc/systemd/system/ daemon on EC2
+
+# On EC2 (Ubuntu 22.04)
+# 1. Install Corretto 25
+# 2. Pull image from ECR (or scp the JAR)
+# 3. Create systemd service:
+[Unit]
+Description=Product Inventory API
+After=network.target
+
+[Service]
+User=ec2-user
+ExecStart=/usr/bin/java -Xms512m -Xmx1024m -jar /opt/app/app.jar
+Restart=always
+RestartSec=5
+Environment=SPRING_PROFILES_ACTIVE=prod
+
+[Install]
+WantedBy=multi-user.target   
